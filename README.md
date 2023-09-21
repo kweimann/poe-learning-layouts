@@ -1,4 +1,4 @@
-# Learning layouts in Path of Exile with Vision Transformers: A proof of concept
+# 🧭 Learning layouts in Path of Exile with Vision Transformers: A proof of concept
 
 https://github.com/kweimann/poe-learning-layouts/assets/8287691/af505d71-ea64-4840-a9bc-375efcad62a5
 
