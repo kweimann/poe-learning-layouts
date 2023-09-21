@@ -90,7 +90,7 @@ python draw_minimap.py path/to/data/video.mp4
 ```
 ![](https://github.com/kweimann/poe-learning-layouts/assets/8287691/9e27d5d8-1eed-48a3-aa06-5968a3745563)
 
-Once you collected enough videos, run the script below to create a dataset.
+Once you collect enough videos, run the script below to create a dataset.
 
 ```shell
 python create_dataset.py path/to/data/ --append --num-workers 4
