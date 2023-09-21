@@ -1,6 +1,6 @@
 # Learning layouts in Path of Exile with Vision Transformers: A proof of concept
 
-https://github.com/kweimann/poe-learning-layouts/assets/8287691/bc2a02e4-0c0b-45d7-8bae-78c4b6ce5911
+https://github.com/kweimann/poe-learning-layouts/assets/8287691/af505d71-ea64-4840-a9bc-375efcad62a5
 
 Where is the exit? Both new and expert players alike often ask themselves that very question. Knowing the answer saves time, especially during the campaign when incorrect layout reads can significantly slow down progression. This project represents our attempt to find an answer using machine learning.
 
@@ -20,7 +20,7 @@ python predict_video.py path/to/video.mp4 --model compass.pt --crop 2190 10 2550
 
 Note that we trained and tested our model using minimap settings shown in the picture below.
 
-![](https://github.com/kweimann/poe-learning-layouts/assets/8287691/cd5be78d-9397-4703-a71c-f31bb5370972)
+![](https://github.com/kweimann/poe-learning-layouts/assets/8287691/072a7ded-ad2d-4956-85af-e6133827d054)
 
 ### Testing and visualizing results
 
@@ -47,8 +47,7 @@ To visualize the results, for each video of a minimap in the test set, the follo
 ```shell
 python visualize_data.py test_data.npz --predictions predictions.pt --out viz_data
 ```
-
-![](https://github.com/kweimann/poe-learning-layouts/assets/8287691/c54ebb24-e2b0-4b36-80c8-4c8d0fc757be)
+![](https://github.com/kweimann/poe-learning-layouts/assets/8287691/23e12439-4df8-4933-a891-851d68dbf1a9)
 
 You can visualize which frames are important for making predictions. To achieve this, we highlight the top frames to which the model attends in the last layer. Note that this is a rather simplistic approach to explaining the model.
 
@@ -56,7 +55,7 @@ You can visualize which frames are important for making predictions. To achieve 
 python visualize_attention.py test_data.npz --model compass.pt --out viz_attn
 ```
 
-https://github.com/kweimann/poe-learning-layouts/assets/8287691/ebd521c6-cf93-48de-ad78-178bf94ef2e5
+https://github.com/kweimann/poe-learning-layouts/assets/8287691/154f29f7-5c2f-4d4e-9768-512729d4375a
 
 Browsing the attention videos, you may notice that our model often puts importance on the early frames up to the tunnel, which connects the two rooms in the A3 Marketplace, and near the entrance to the A3 Catacombs.
 
@@ -74,7 +73,7 @@ skvideo.io.vwrite(
 )
 ```
 
-https://github.com/kweimann/poe-learning-layouts/assets/8287691/e77f698e-fb58-4035-9033-ebcfe0919a3e
+https://github.com/kweimann/poe-learning-layouts/assets/8287691/423ff8cc-5a1f-4c30-8f67-6c3a55974e11
 
 ### Training your own model
 
@@ -89,8 +88,7 @@ If you want to create your own dataset, you should capture videos of just the mi
 ```shell
 python draw_minimap.py path/to/data/video.mp4
 ```
-
-![](https://github.com/kweimann/poe-learning-layouts/assets/8287691/003522b3-cae6-4c1f-bb54-9bc7d7b9ffb1)
+![](https://github.com/kweimann/poe-learning-layouts/assets/8287691/9e27d5d8-1eed-48a3-aa06-5968a3745563)
 
 Once you collected enough videos, run the script below to create a dataset.
 
