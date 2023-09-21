@@ -1,0 +1,7 @@
+numpy==1.23.5
+torch
+scikit-learn
+scikit-video
+opencv-python
+PyYaml
+tqdm
