@@ -1,10 +1,10 @@
 # 🧭 Learning layouts in Path of Exile with Vision Transformers: A proof of concept
 
-https://github.com/kweimann/poe-learning-layouts/assets/8287691/af505d71-ea64-4840-a9bc-375efcad62a5
+https://github.com/kweimann/poe-learning-layouts/assets/8287691/af505d71-ea64-4840-a9bc-375efcad62a5 
 
-Where is the exit? Both new and expert players alike often ask themselves that very question. Knowing the answer saves time, especially during the campaign when incorrect layout reads can significantly slow down progression. This project represents our attempt to find an answer using machine learning.
+Where's the exit? This question often crosses the minds of both newcomers and seasoned players alike. The key lies in understanding the game's layouts, especially during the campaign when taking a wrong turn can significantly slow you down. Our project aims to solve this challenge through machine learning.
 
-We implemented a proof-of-concept for learning layouts in Path of Exile using Vision Transformers. We trained the deep learning model to predict the direction that leads to the exit in the A3 Marketplace based only on a video of the minimap. You can see the model at work in the video above. The red arrow shows the predicted direction of the exit, the green arrow shows the actual direction. 
+We've developed a proof-of-concept for learning layouts in Path of Exile using Vision Transformers. We trained a Vision Transformer to predict the direction of the exit in the A3 Marketplace, relying solely on a video of the minimap. You can see the model in action in the video above: the red arrow indicates the predicted exit direction, while the green arrow shows the actual direction.
 
 You can download the model at https://huggingface.co/kweimann/poe-learning-layouts.
 
@@ -24,7 +24,7 @@ Note that we trained and tested our model using minimap settings shown in the pi
 
 ### Testing and visualizing results
 
-You can test the performance of our model on a test set of 50 minimap videos. The script writes the results to `predictions.pt`, which you can later visualize.
+You can measure the performance of our model on a test set of 50 minimap videos. The script writes the results to `predictions.pt`, which you can later visualize.
 
 ```shell
 python test_model.py test_data.npz --model compass.pt
@@ -83,7 +83,7 @@ You can replicate our work by training (and optionally validating) your own mode
 python train_model.py training_data.npz 
 ```
 
-If you want to create your own dataset, you should capture videos of just the minimap in the top-right corner. Each video should start when you've entered the zone, and end just before the exit. This way the algorithm will be able to correctly annotate the direction of the exit. To ensure that the videos are correct, you can draw the minimap as a result of stitching the frames.
+If you wish to create your own dataset, you should record videos focused solely on the minimap in the top-right corner. Each video should begin upon entering the zone and conclude just prior to reaching the exit. This approach enables the algorithm to accurately annotate the exit direction. To ensure the accuracy of the videos, you can draw the minimap using the script below, which stitches the frames together.
 
 ```shell
 python draw_minimap.py path/to/data/video.mp4
@@ -95,6 +95,12 @@ Once you collect enough videos, run the script below to create a dataset.
 ```shell
 python create_dataset.py path/to/data/ --append --num-workers 4
 ```
+
+### How does the model learn?
+
+In the early stages of our project, we set a crucial requirement: data collection should be simple and not require manual labeling. We accomplish this by first stitching together frames from a minimap video and then for each frame calculating the direction of the exit frame. For this method to work effectively, the video must end precisely at the exit point. We calculate the exit's direction by measuring the angle between the x-axis and the line connecting the center points of a given frame and the exit frame.
+
+Our model takes a video as input and learns to predict the angle at each frame. To prevent overfitting, we deliberately exclude a significant number of frames, which adds complexity to the task. During data collection, we discard frames to ensure that the difference between consecutive frames is approximately one-quarter of the screen. During training, we further mask approximately 80% of the frames and perform backpropagation solely on the unmasked frames.
 
 ### Installation
 
@@ -111,8 +117,8 @@ python create_dataset.py path/to/data/ --append --num-workers 4
 
 We showed that our model can learn the layout of A3 Marketplace very well, and we believe it is capable of learning the layouts of other zones. However, there are still some limitations.
 
-1. There is no mechanism to represent multiple directions within a single layout, e.g., pick up a quest item and find the exit. Currently, this could be achieved by splitting the video, so that the algorithm can correctly annotate the directions.
-2. Our model has no concept of walls or otherwise obstructed paths. Therefore, in some extreme cases, e.g., labyrinth layouts, the predictions may not be very useful.
+1. There is no mechanism to represent multiple directions within a single layout, e.g., pick up a quest item and find the exit. Currently, this could be achieved by segmenting the video, enabling the algorithm to accurately annotate various directions.
+2. Our model has no concept of walls or otherwise obstructed paths. Consequently, in more complex scenarios, such as labyrinthine layouts, the predictions may not prove particularly useful.
 
 ### Want to contribute?
 
